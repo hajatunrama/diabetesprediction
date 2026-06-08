@@ -25,6 +25,6 @@ if submit:
 prediction = model.predict(features)[0]
 # Tampilkan hasil
 if prediction == 1:
-st.error("Hasil: Positif Diabetes")
+    st.error("Hasil: Positif Diabetes")
 else:
-st.success("Hasil: Tidak Diabetes")
+    st.success("Hasil: Tidak Diabetes")
