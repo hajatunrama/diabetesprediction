@@ -5,8 +5,8 @@ model = joblib.load('diabetes_model.pkl')
 st.title("Prediksi Diabetes")
 # Form input
 with st.form("form_diabetes"):
-pregnancies = st.number_input('Pregnancies', min_value=0, max_value=20, step=1)
-glucose = st.number_input('Glucose', min_value=0, max_value=200)
+    pregnancies = st.number_input('Pregnancies', min_value=0, max_value=20, step=1)
+    glucose = st.number_input('Glucose', min_value=0, max_value=200)
 blood_pressure = st.number_input('Blood Pressure', min_value=0, max_value=150)
 skin_thickness = st.number_input('Skin Thickness', min_value=0, max_value=100)
 insulin = st.number_input('Insulin', min_value=0, max_value=1000)
