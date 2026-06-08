@@ -53,9 +53,9 @@ with st.sidebar:
 
     st.header("👨‍🎓 Identitas")
 
-    st.write("Nama : ............")
-    st.write("NIM : ............")
-    st.write("Kelas : ............")
+    st.write("Nama : Abdul Hajatun")
+    st.write("NIM : 22.12.2588")
+    st.write("Kelas : SI 05")
 
 # =========================
 # METRIC
