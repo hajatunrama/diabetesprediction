@@ -2,67 +2,151 @@ import streamlit as st
 import numpy as np
 import joblib
 
-# Load model
+# =========================
+# KONFIGURASI HALAMAN
+# =========================
+
+st.set_page_config(
+    page_title="Sistem Prediksi Diabetes",
+    page_icon="🩺",
+    layout="wide"
+)
+
+# =========================
+# LOAD MODEL
+# =========================
+
 model = joblib.load("diabetes_model.pkl")
 
-st.title("Prediksi Diabetes")
+# =========================
+# HEADER
+# =========================
 
-# Form input
-with st.form("form_diabetes"):
+st.title("🩺 Sistem Prediksi Diabetes")
+st.markdown(
+    """
+    Aplikasi Machine Learning untuk memprediksi risiko diabetes
+    menggunakan algoritma **K-Nearest Neighbors (KNN)**.
+    """
+)
+
+# =========================
+# SIDEBAR
+# =========================
+
+with st.sidebar:
+
+    st.header("📋 Informasi")
+
+    st.info(
+        """
+        **Dataset**
+        - Pima Indians Diabetes Dataset
+
+        **Algoritma**
+        - K-Nearest Neighbors (KNN)
+
+        **Deployment**
+        - Streamlit Cloud
+        """
+    )
+
+    st.header("👨‍🎓 Identitas")
+
+    st.write("Nama : ............")
+    st.write("NIM : ............")
+    st.write("Kelas : ............")
+
+# =========================
+# METRIC
+# =========================
+
+m1, m2, m3 = st.columns(3)
+
+with m1:
+    st.metric("Model", "KNN")
+
+with m2:
+    st.metric("Jumlah Fitur", "8")
+
+with m3:
+    st.metric("Status", "Aktif")
+
+st.divider()
+
+# =========================
+# FORM INPUT
+# =========================
+
+st.subheader("📝 Input Data Pasien")
+
+col1, col2 = st.columns(2)
+
+with col1:
 
     pregnancies = st.number_input(
-        'Pregnancies',
+        "Pregnancies",
         min_value=0,
         max_value=20,
-        step=1
+        value=0
     )
 
     glucose = st.number_input(
-        'Glucose',
+        "Glucose",
         min_value=0,
-        max_value=200
+        max_value=200,
+        value=100
     )
 
     blood_pressure = st.number_input(
-        'Blood Pressure',
+        "Blood Pressure",
         min_value=0,
-        max_value=150
+        max_value=150,
+        value=70
     )
 
     skin_thickness = st.number_input(
-        'Skin Thickness',
+        "Skin Thickness",
         min_value=0,
-        max_value=100
+        max_value=100,
+        value=20
     )
 
+with col2:
+
     insulin = st.number_input(
-        'Insulin',
+        "Insulin",
         min_value=0,
-        max_value=1000
+        max_value=1000,
+        value=80
     )
 
     bmi = st.number_input(
-        'BMI',
+        "BMI",
         min_value=0.0,
-        max_value=70.0
+        max_value=70.0,
+        value=25.0
     )
 
     dpf = st.number_input(
-        'Diabetes Pedigree Function',
+        "Diabetes Pedigree Function",
         min_value=0.0,
-        max_value=2.5
+        max_value=3.0,
+        value=0.5
     )
 
     age = st.number_input(
-        'Age',
+        "Age",
         min_value=1,
-        max_value=120
+        max_value=120,
+        value=30
     )
 
-    submit = st.form_submit_button("Proses")
+# =========================
+# TOMBOL PREDIKSI
+# =========================
 
-# Ketika tombol ditekan
-if submit:
+if st.button("🔍 Prediksi Diabetes"):
 
     features = np.array([[
         pregnancies,
@@ -77,7 +161,41 @@ if submit:
 
     prediction = model.predict(features)[0]
 
+    st.divider()
+
+    st.subheader("📊 Hasil Prediksi")
+
     if prediction == 1:
-        st.error("Hasil: Positif Diabetes")
+
+        st.error(
+            "⚠️ Pasien memiliki indikasi Diabetes."
+        )
+
     else:
-        st.success("Hasil: Tidak Diabetes")
+
+        st.success(
+            "✅ Pasien tidak terindikasi Diabetes."
+        )
+
+    st.subheader("📄 Data Input")
+
+    st.dataframe({
+        "Pregnancies": [pregnancies],
+        "Glucose": [glucose],
+        "Blood Pressure": [blood_pressure],
+        "Skin Thickness": [skin_thickness],
+        "Insulin": [insulin],
+        "BMI": [bmi],
+        "DPF": [dpf],
+        "Age": [age]
+    })
+
+# =========================
+# FOOTER
+# =========================
+
+st.divider()
+
+st.caption(
+    "Sistem Prediksi Diabetes berbasis Machine Learning menggunakan algoritma KNN."
+)
